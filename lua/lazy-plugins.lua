@@ -65,6 +65,10 @@ require('lazy').setup({
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.neo-tree',
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

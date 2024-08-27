@@ -8,7 +8,7 @@ wk.add({
     end
   },
   {
-    "<leader>w",
+    "<leader>W",
     group = "[W]indows",
     expand = function()
       return require("which-key.extras").expand.win()

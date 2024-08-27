@@ -74,6 +74,85 @@ return {
       }
     end,
   },
+
+  {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    opts = {
+      menu = {
+        width = vim.api.nvim_win_get_width(0) - 4,
+      },
+      settings = {
+        save_on_toggle = true,
+      },
+    },
+    config = function()
+      -- show harpoon quick menu in telescope instead of default viewer
+      local conf = require('telescope.config').values
+      local function toggle_telescope(harpoon_files)
+        local file_paths = {}
+        for _, item in ipairs(harpoon_files.items) do
+          table.insert(file_paths, item.value)
+        end
+        require('telescope.pickers')
+          .new({}, {
+            prompt_title = 'Harpoon',
+            finder = require('telescope.finders').new_table {
+              results = file_paths,
+            },
+            previewer = conf.file_previewer {},
+            sorter = conf.generic_sorter {},
+          })
+          :find()
+      end
+      require('which-key').setup()
+      require('which-key').add {
+        {
+          '<leader>a',
+          function()
+            require('harpoon'):list():add()
+          end,
+          desc = 'Harpoon File',
+        },
+        {
+          '<C-e>',
+          function()
+            local harpoon = require 'harpoon'
+            toggle_telescope(harpoon:list())
+          end,
+          desc = 'Harpoon Quick Menu',
+        },
+        {
+          '<leader>1',
+          function()
+            require('harpoon'):list():select(1)
+          end,
+          desc = 'Harpoon to File [1]',
+        },
+        {
+          '<leader>2',
+          function()
+            require('harpoon'):list():select(2)
+          end,
+          desc = 'Harpoon to File [2]',
+        },
+        {
+          '<leader>3',
+          function()
+            require('harpoon'):list():select(3)
+          end,
+          desc = 'Harpoon to File [3]',
+        },
+        {
+          '<leader>4',
+          function()
+            require('harpoon'):list():select(4)
+          end,
+          desc = 'Harpoon to File [4]',
+        },
+      }
+    end,
+  },
 }
 
 -- vim: ts=2 sts=2 sw=2 et

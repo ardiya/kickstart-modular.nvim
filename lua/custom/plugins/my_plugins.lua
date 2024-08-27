@@ -105,52 +105,57 @@ return {
           })
           :find()
       end
+
+      local function generate_harpoon_menu()
+        -- generate binding which contains actual file name
+        local list = require('harpoon'):list()
+        for i = 1, list:length() do
+          require('which-key').add {
+            '<leader>p' .. i,
+            function()
+              require('harpoon'):list():select(i)
+            end,
+            desc = list:get(i).value,
+          }
+        end
+      end
+
       require('which-key').setup()
       require('which-key').add {
+        { '<leader>p', group = 'Har[p]oon' },
         {
-          '<leader>a',
+          '<leader>pa',
           function()
             require('harpoon'):list():add()
+            generate_harpoon_menu()
           end,
-          desc = 'Harpoon File',
+          desc = '[A]dd file',
         },
         {
-          '<C-e>',
+          '<leader>pr',
           function()
-            local harpoon = require 'harpoon'
-            toggle_telescope(harpoon:list())
+            require('harpoon'):list():remove()
+            generate_harpoon_menu()
           end,
-          desc = 'Harpoon Quick Menu',
+          desc = '[R]emove file',
         },
         {
-          '<leader>1',
+          '<leader>pq',
           function()
-            require('harpoon'):list():select(1)
+            require('harpoon.ui'):toggle_quick_menu(require('harpoon'):list())
           end,
-          desc = 'Harpoon to File [1]',
+          desc = '[Q]uick menu',
         },
         {
-          '<leader>2',
+          '<leader>pt',
           function()
-            require('harpoon'):list():select(2)
+            toggle_telescope(require('harpoon'):list())
           end,
-          desc = 'Harpoon to File [2]',
-        },
-        {
-          '<leader>3',
-          function()
-            require('harpoon'):list():select(3)
-          end,
-          desc = 'Harpoon to File [3]',
-        },
-        {
-          '<leader>4',
-          function()
-            require('harpoon'):list():select(4)
-          end,
-          desc = 'Harpoon to File [4]',
+          desc = '[T]elescope menu',
         },
       }
+
+      generate_harpoon_menu()
     end,
   },
 }

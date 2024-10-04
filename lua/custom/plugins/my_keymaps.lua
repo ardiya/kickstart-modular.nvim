@@ -1,23 +1,28 @@
-local wk = require("which-key")
-wk.add({
+local wk = require 'which-key'
+wk.add {
   {
-    "<leader>b",
-    group = "[B]uffers",
+    '<leader>b',
+    group = '[B]uffers',
     expand = function()
-      return require("which-key.extras").expand.buf()
-    end
+      return require('which-key.extras').expand.buf()
+    end,
   },
   {
-    "<leader>W",
-    group = "[W]indows",
+    '<leader>W',
+    group = '[W]indows',
     expand = function()
-      return require("which-key.extras").expand.win()
-    end
+      local win_list = require('which-key.extras').expand.win()
+      local indexed_win_list = {}
+      for i = 1, #win_list do
+        indexed_win_list[i] = win_list[i - 1] -- Shift the index by -1
+      end
+      return indexed_win_list
+    end,
   },
   -- ctrl+` to <cmd>ToggleTerm
-  { "<C-`>", "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" }
-})
-vim.keymap.set('t', "<C-`>", "<cmd>ToggleTerm<cr>", { desc = 'Toggle Terminal' })
+  { '<C-`>', '<cmd>ToggleTerm<cr>', desc = 'Toggle Terminal' },
+}
+vim.keymap.set('t', '<C-`>', '<cmd>ToggleTerm<cr>', { desc = 'Toggle Terminal' })
 
 -- Disable arrow keys in normal mode
 vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')

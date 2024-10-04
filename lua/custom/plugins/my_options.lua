@@ -7,7 +7,11 @@ vim.opt.relativenumber = true
 -- neovide configs
 if vim.g.neovide then
   -- only set font in neovide, otherwise the terminal emulator would handle it
-  vim.opt.guifont = 'FantasqueSansM Nerd Font Mono'
+  if vim.fn.has 'win32' == 1 then
+    vim.opt.guifont = 'FantasqueSansM Nerd Font Mono'
+  else
+    vim.opt.guifont = 'FantasqueSansMono Nerd Font Mono'
+  end
 
   vim.g.neovide_cursor_vfx_mode = 'pixiedust'
   vim.g.neovide_cursor_antialiasing = true

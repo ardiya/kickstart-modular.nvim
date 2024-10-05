@@ -55,6 +55,12 @@ return {
         },
       },
 
+      -- Add extra key bindings to trigger
+      triggers = {
+        { '<auto>', mode = 'nixsotc' },
+        { 's', mode = { 'n', 'v' } },
+      },
+
       -- Document existing key chains
       spec = {
         { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },

@@ -33,8 +33,5 @@ vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 -- set space to no-op so it doesn't conflict with leader
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
 
--- set s to no-op so it doesn't conflict with mini.surround
-vim.api.nvim_set_keymap('', 's', '<Nop>', { noremap = true, silent = true })
-
 return {}
 -- vim: ts=2 sts=2 sw=2 et

@@ -1,6 +1,3 @@
--- usually I have nerd font.. so use that
-vim.g.have_nerd_font = true
-
 -- relative line numbers
 vim.opt.relativenumber = true
 

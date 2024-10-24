@@ -78,6 +78,7 @@ return {
   -- bufferline
   {
     'akinsho/bufferline.nvim',
+    event = 'VeryLazy',
     keys = {
       { '<leader>bp', '<Cmd>BufferLineTogglePin<CR>', desc = 'Toggle Pin' },
       { '<leader>bP', '<Cmd>BufferLineGroupClose ungrouped<CR>', desc = 'Delete Non-Pinned Buffers' },
@@ -94,7 +95,7 @@ return {
     opts = {
       options = {
         diagnostics = 'nvim_lsp',
-        always_show_bufferline = true,
+        always_show_bufferline = false,
         offsets = {
           {
             filetype = 'neo-tree',

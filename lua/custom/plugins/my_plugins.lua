@@ -79,19 +79,6 @@ return {
   {
     'akinsho/bufferline.nvim',
     event = 'VeryLazy',
-    keys = {
-      { '<leader>bp', '<Cmd>BufferLineTogglePin<CR>', desc = 'Toggle Pin' },
-      { '<leader>bP', '<Cmd>BufferLineGroupClose ungrouped<CR>', desc = 'Delete Non-Pinned Buffers' },
-      { '<leader>bo', '<Cmd>BufferLineCloseOthers<CR>', desc = 'Delete Other Buffers' },
-      { '<leader>br', '<Cmd>BufferLineCloseRight<CR>', desc = 'Delete Buffers to the Right' },
-      { '<leader>bl', '<Cmd>BufferLineCloseLeft<CR>', desc = 'Delete Buffers to the Left' },
-      { '<S-h>', '<cmd>BufferLineCyclePrev<cr>', desc = 'Prev Buffer' },
-      { '<S-l>', '<cmd>BufferLineCycleNext<cr>', desc = 'Next Buffer' },
-      { '[b', '<cmd>BufferLineCyclePrev<cr>', desc = 'Prev Buffer' },
-      { ']b', '<cmd>BufferLineCycleNext<cr>', desc = 'Next Buffer' },
-      { '[B', '<cmd>BufferLineMovePrev<cr>', desc = 'Move buffer prev' },
-      { ']B', '<cmd>BufferLineMoveNext<cr>', desc = 'Move buffer next' },
-    },
     opts = {
       options = {
         diagnostics = 'nvim_lsp',
@@ -117,90 +104,6 @@ return {
           end)
         end,
       })
-    end,
-  },
-
-  {
-    'ThePrimeagen/harpoon',
-    branch = 'harpoon2',
-    opts = {
-      menu = {
-        width = vim.api.nvim_win_get_width(0) - 4,
-      },
-      settings = {
-        save_on_toggle = true,
-      },
-    },
-    config = function()
-      -- show harpoon quick menu in telescope instead of default viewer
-      local conf = require('telescope.config').values
-      local function toggle_telescope(harpoon_files)
-        local file_paths = {}
-        for _, item in ipairs(harpoon_files.items) do
-          table.insert(file_paths, item.value)
-        end
-        require('telescope.pickers')
-          .new({}, {
-            prompt_title = 'Harpoon',
-            finder = require('telescope.finders').new_table {
-              results = file_paths,
-            },
-            previewer = conf.file_previewer {},
-            sorter = conf.generic_sorter {},
-          })
-          :find()
-      end
-
-      local function generate_harpoon_menu()
-        -- generate binding which contains actual file name
-        local list = require('harpoon'):list()
-        for i = 1, list:length() do
-          require('which-key').add {
-            '<leader>p' .. i,
-            function()
-              require('harpoon'):list():select(i)
-            end,
-            desc = list:get(i).value,
-          }
-        end
-      end
-
-      require('which-key').setup()
-      require('which-key').add {
-        { '<leader>p', group = 'Har[p]oon' },
-        {
-          '<leader>pa',
-          function()
-            require('harpoon'):list():add()
-            generate_harpoon_menu()
-          end,
-          desc = '[A]dd file',
-        },
-        {
-          '<leader>pr',
-          function()
-            require('harpoon'):list():remove()
-            generate_harpoon_menu()
-          end,
-          desc = '[R]emove file',
-        },
-        {
-          '<leader>pq',
-          function()
-            require('harpoon.ui'):toggle_quick_menu(require('harpoon'):list())
-          end,
-          desc = '[Q]uick menu',
-        },
-        {
-          '<leader>pt',
-          function()
-            toggle_telescope(require('harpoon'):list())
-          end,
-          desc = '[T]elescope menu',
-        },
-      }
-
-      generate_harpoon_menu()
     end,
   },
 }
